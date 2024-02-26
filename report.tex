@@ -10,7 +10,7 @@
 \usepackage{catchfile}
 %% The following content must be adapted for the final version
 % leave empty if no availability url should be set
-\newcommand\vldbavailabilityurl{https://github.com/emilycourt/reproducibility_project}
+\newcommand\vldbavailabilityurl{10.5281/zenodo.10711084}
 
 \begin{document}
 \title{Evaluating Performance of YFilter's Approach to Nested Path Expression Processing}
@@ -46,9 +46,6 @@ for High-Performance XML Filtering,''~\cite{yfilter} both the XFilter and YFilte
 
 The source code for YFilter can be found online~\cite{yfilter_source}. However, the implementation of the XFilter algorithm used in the study is not available. And while the pseudo-code for the alternate predicate-handling techniques is given in the paper, the implementation is also not available. There is one experiment which only requires the standard YFilter software, so that is the experiment looked at in this report. 
 
-% The article ``Path Sharing and Predicate Evaluation
-% for High-Performance XML Filtering''~\cite{yfilter} describes a series of experiments evaluating the performance of YFilter. 
-
 While the same source code~\cite{yfilter_source} used in the original study is available, not all of the data artifacts are available, and so we consider this to be a replication as opposed to a reproduction. 
 
 \section{Experiment Details}
@@ -56,8 +53,6 @@ While the same source code~\cite{yfilter_source} used in the original study is a
 The experiment being replicated here is an evaluation of the performance of YFilter's approach to processing nested path expressions. In the experiment, YFilter is run repeatedly with different sets of queries. The query sets vary in the number of distinct queries and the number of nested path expressions in each query.
 
 The performance metric used is called ``multiquery processing time (MQPT),'' which captures all costs attributable to the filtering algorithms themselves~\cite{yfilter}. MQPT is calculated as the filtering time minus the document parsing time, which are both output when the YFilter program runs.
-
-%This is broken down further by using an additional profiling tool that provides more statistics to explain the execution costs. A small portion of this output is shown in a table in the original paper, and a more detailed analysis of the results are described. However, the full output is not available, and so we do not consider this in our replication.
 
 \begin{figure}
   \centering
@@ -68,7 +63,7 @@ The performance metric used is called ``multiquery processing time (MQPT),'' whi
 
 In the original study, a trend was observed from Figure \ref{fig:reference_figure}. As the number of queries grows, MQPT increases to process the first nested path queries. However, processing additional nested paths costs only a little more than processing the first nested paths.~\cite{yfilter}
 
-As this figure is the only thing from the experiment results available to us, we will compare the results of our replcation to this graph. We consider our replication experiment to be successfull if we observe the same trend on our graph. Specifically, we look for the following:
+As this figure is the only thing from the experiment results available to us, we will compare the results of our replication to this graph. We consider our replication experiment to be successful if we observe the same trend on our graph. Specifically, we look for the following:
 
 \begin{enumerate}
     \item There is an increase in MQPT for each successive increase in number of queries processed.
@@ -81,17 +76,17 @@ As this figure is the only thing from the experiment results available to us, we
 
 To run the experiment, we require the YFilter program, a set of XML documents, and a set of queries. 
 
-The YFilter program was downloaded from the project website~\cite{yfilter_source}. The resources include both the source code and pre-compiled executables of the program. Since our replication is using the original program without any modifications, we decided to use the given executables rather than compiling them ourselves.
+The YFilter program was downloaded from the project website~\cite{yfilter_source}. The resources include both the source code and pre-compiled executables of the program. Since our replication is using the original program without any modifications, we decided to use the given executables rather than compiling them ourselves. 
 
 The original study used a set of 200 XML documents, generated using IBM's XML Generator~\cite{IBM_XML}. While the XML documents used in the study are not available, the YFilter project does include a set of XML documents that the original team generated with the same settings. So, in our replication, we choose 200 of these documents. To make it more clear where to find the data in our reproduction package, we copied the XML documents from the YFilter package into our own \texttt{data/xml} directory of both the github repository and the docker container.
 
-The set of queries used in the original study is also not availble. However, a query generator is included in the YFilter project, and the workload settings used to generate the query sets are described in detail. So, for our replication, we use the provided query generator and the stated workload settings to produce query sets.
+The set of queries used in the original study is also not available. However, a query generator is included in the YFilter project, and the workload settings used to generate the query sets are described in detail. So, for our replication, we use the provided query generator and the stated workload settings to produce query sets.
 
 Since the query generator does not produce static results, we also decided to generate the queries ahead of time, and to copy them directly into the docker container. This enables us to use the same set of query documents when repeating the experiment. The generated query files, along with the script used to generated them, can be found in the \texttt{data/queries} directory.
 
 When generating queries, the parameter NP is used to generate a number of nested path expressions in each query~\cite{yfilter}. The original experiment evaluates the performance of YFilter as the number of distinct queries is varied from 1000 to 200,000, with NP equal to 1, 2, and 3. For our experiment, we use the same values for NP and the same range of queries.
 
-Finally, in the original study, the Java Virtual Machine is run with a maximum allocation pool of 250MB, so that virtual memory and other I/O-activity did not influence the results~\cite{yfilter}. We did the same in our experiment.
+Finally, in the original study, the Java Virtual Machine is run with a maximum allocation pool of 250MB, so that virtual memory and other I/O-activity did not influence the results~\cite{yfilter}. We do the same in our experiment.
 
 \section{Replication Results}
 
@@ -122,14 +117,14 @@ Finally, in the original study, the Java Virtual Machine is run with a maximum a
 
 The results of the replicated experiment can be seen in Figure \ref{fig:replication_figure} and in Table \ref{table:results_table}.
 
-One of the first things to notice is that the processing time is significantly less than in the original experiment. Instead of dealing with processing times in the range of 100-400 ms, we instead see a range of about 0-30 ms. But, since we are evaluating the relative difference of processing time for additional nested path expressions, this does not pose a problem for our replication.
+One of the first things to notice is that the processing time is significantly less than in the original experiment. Instead of dealing with processing times in the range of 100-400ms, we instead see a range of about 0-25ms. The increased processing power of our machine is one potential threat to validity, but, since we are evaluating the relative difference of processing time for additional nested path expressions, this does not pose a problem for our replication.
 
-The negative MQPT values resulting from processing 1000 queries may seem strange, but, as MQPT is calcuated as the difference between the filtering time and the parsing time, this is just the result of the parsing time taking longer than the filtering time (and in this case, both took between 1-3ms). Since this small number of queries takes so little time to process, we decided to add an additional query set of 10,000 queries to better distinguish the lower-end of processing time.
+We also noticed that the processing time for 1000 queries is so small that it is not accurately measured in milliseconds. This is another potential threat to validity, and so we decided to add an additional query set of 10,000 queries to better distinguish the lower-end of processing time.
 
-When considering whether or not this is a successful replication, the first trend is that there is an increase in MQPT for each successive increase in number of queries processed. Looking at our results, we can see that this trend is present.
+When considering whether or not this is a successful replication, the first trend we expect to see is that there is an increase in MQPT for each successive increase in number of queries processed. Looking at our results, we can see that this trend is present.
 
 Next, we want to see that the cases of larger NP values exhibit efficiency and scalability very close to that in the case of NP=1.
-This criterion takes a bit more consideration. It is interesting to see that, unlike in the original experiment, we actually observe smaller MQPT values for higher number of nested path expressions in some cases. We believe this is a result of the faster processing times in general. Here it is helpful to look at Table \ref{table:results_table}. We can see that the range of processing times for each number of queries is within about 5ms, and so there is not much variation in the time needed to process different number of nested path expressions. Because of this, we consider the second trend to also be present.
+This criterion takes a bit more consideration. It is interesting to see that, unlike in the original experiment, we actually observe smaller MQPT values for higher number of nested path expressions in some cases. We believe this is a result of the faster processing times. Here it is helpful to look at Table \ref{table:results_table}. We can see that the range of processing times for each number of queries is within about 3ms, and so there is not much variation in the time needed to process different number of nested path expressions. Because of this, we consider the second trend to also be present.
 
 Therefore, since we see both of the required criteria in our data, we consider this to be a successful replication of the original experiment.
 

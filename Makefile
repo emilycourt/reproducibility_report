@@ -3,7 +3,7 @@ RESULTS := results/results_table.tex results/replication_figure.png
 report: report.pdf
 
 report.pdf: $(RESULTS) report.tex
-	-latexmk -pdf report.tex
+	-latexmk -silent -pdf report.tex
 
 purge:
 	-latexmk -c
