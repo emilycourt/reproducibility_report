@@ -1,20 +1,20 @@
-DOC  := report.tex
+DOC	:= report.tex
 
-report: figures doc
-
-figures:
-# 	@$(MAKE) -C $@
-
-doc: $(DOC:.tex=.pdf)
+report: $(DOC:.tex=.pdf)
 
 %.pdf: %.tex
 	-latexmk -pdf $(DOC)
 
 purge:
-	-rm -f *.{aux,dvi,log,bbl,blg,brf,fls,toc,thm,out,fdb_latexmk}
+	-rm -f *.aux
+	-rm -f *.bbl
+	-rm -f *.blg
+	-rm -f *.fdb_latexmk
+	-rm -f *.fls
+	-rm -f *.log
+	-rm -f *.out
 
 clean: purge
-# 	$(MAKE) -C figures $@
 	-rm -f $(DOC:.tex=.pdf)
 
-.PHONY: report figures purge clean
+.PHONY: report purge clean
