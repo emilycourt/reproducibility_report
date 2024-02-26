@@ -1,38 +1,35 @@
 @article{yfilter,
-author = {Diao, Yanlei and Altinel, Mehmet and Franklin, Michael J. and Zhang, Hao and Fischer, Peter},
+author = {Diao, Y. and Altinel, M. and Franklin, M. J. and Zhang, H. and Fischer, P.},
 title = {Path Sharing and Predicate Evaluation for High-Performance XML Filtering},
-year = {2003},
 issue_date = {December 2003},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
 volume = {28},
 number = {4},
-issn = {0362-5915},
-url = {https://doi.org/10.1145/958942.958947},
-doi = {10.1145/958942.958947},
-abstract = {XML filtering systems aim to provide fast, on-the-fly matching of XML-encoded data to large numbers of query specifications containing constraints on both structure and content. It is now well accepted that approaches using event-based parsing and Finite State Machines (FSMs) can provide the basis for highly scalable structure-oriented XML filtering systems. The XFilter system [Altinel and Franklin 2000] was the first published FSM-based XML filtering approach. XFilter used a separate FSM per path query and a novel indexing mechanism to allow all of the FSMs to be executed simultaneously during the processing of a document. Building on the insights of the XFilter work, we describe a new method, called "YFilter" that combines all of the path queries into a single Nondeterministic Finite Automaton (NFA). YFilter exploits commonality among queries by merging common prefixes of the query paths such that they are processed at most once. The resulting shared processing provides tremendous improvements in structure matching performance but complicates the handling of value-based predicates.In this article, we first describe the XFilter and YFilter approaches and present results of a detailed performance comparison of structure matching for these algorithms as well as a hybrid approach. The results show that the path sharing employed by YFilter can provide order-of-magnitude performance benefits. We then propose two alternative techniques for extending YFilter's shared structure matching with support for value-based predicates, and compare the performance of these two techniques. The results of this latter study demonstrate some key differences between shared XML filtering and traditional database query processing. Finally, we describe how the YFilter approach is extended to handle more complicated queries containing nested path expressions.},
 journal = {ACM Trans. Database Syst.},
+year = {2003},
 month = {dec},
 pages = {467–516},
-numpages = {50},
-keywords = {Nondeterministic Finite Automaton, path sharing, predicate evaluation, nested path expressions., content-based matching, structure matching, XML filtering}
+
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+issn = {0362-5915}
 }
 
 @inproceedings{xfilter,
-author = {Altinel, Mehmet and Franklin, Michael J.},
+author = {Altinel, M. and Franklin, M. J.},
 title = {Efficient Filtering of XML Documents for Selective Dissemination of Information},
 year = {2000},
+booktitle = {Proceedings of the 26th International Conference on Very Large Data Bases},
+
 isbn = {1558607153},
 publisher = {Morgan Kaufmann Publishers Inc.},
 address = {San Francisco, CA, USA},
-booktitle = {Proceedings of the 26th International Conference on Very Large Data Bases},
 pages = {53–64},
 numpages = {12},
 series = {VLDB '00}
 }
 
 @misc{IBM_XML,
-author = {Diaz, A. L. and Lovell, D},
+author = {Diaz, A. L. and Lovell, D.},
 year = 1999,
 title = "XML generator",
 url = "http://www.alphaworks.ibm.com/tech/xmlgenerator"
