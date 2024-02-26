@@ -1,20 +1,15 @@
-DOC	:= report.tex
+RESULTS := results/results_table.tex results/replication_figure.png
 
-report: $(DOC:.tex=.pdf)
+report: report.pdf
 
-%.pdf: %.tex
-	-latexmk -pdf $(DOC)
+report.pdf: $(RESULTS) report.tex
+	-latexmk -pdf report.tex
 
 purge:
-	-rm -f *.aux
+	-latexmk -c
 	-rm -f *.bbl
-	-rm -f *.blg
-	-rm -f *.fdb_latexmk
-	-rm -f *.fls
-	-rm -f *.log
-	-rm -f *.out
 
 clean: purge
-	-rm -f $(DOC:.tex=.pdf)
+	-rm -f report.pdf
 
 .PHONY: report purge clean
